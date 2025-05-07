@@ -15,13 +15,9 @@ def cluster_data():
     if not data:
         return jsonify({'status': 'error', 'message': 'No data received'}), 400
     df = pd.DataFrame(data['data'])
-
-    bobot = data.get('bobot', {
-        'working_st': 4,  # Default jika tidak ada bobot di request
-        'disability_st': 5,
-        'chronic_disease_type': 4.5,
-        'dependents_count': 3,
-    })
+    if 'bobot' not in data:
+        return jsonify({'status': 'error', 'message': "'bobot' field is required"}), 400
+    bobot = data.get('bobot')
 
     for feature, weight in bobot.items():
         df[feature] = df[feature] * weight  # Bobot ditambahkan pada masing-masing fitur
