@@ -23,7 +23,7 @@ def cluster_data():
         df[feature] = df[feature] * weight  # Bobot ditambahkan pada masing-masing fitur
 
     # Fitur yang digunakan untuk klasterisasi
-    X = df[['working_st', 'disability_st', 'chronic_disease_type', 'dependents_count']]
+    X = df[['working_st', 'disability_st', 'chronic_disease_type', 'single_elderly_family']]
 
     # Klasterisasi Menggunakan KMeans
     kmeans = KMeans(n_clusters=3, init='k-means++', random_state=42)
@@ -42,7 +42,7 @@ def cluster_data():
     cluster_bobot = {}
     for cluster_id in cluster_sizes:
         cluster_data = df[df['cluster'] == cluster_id]
-        total_bobot = cluster_data[['working_st', 'disability_st', 'chronic_disease_type', 'dependents_count']].sum().sum()
+        total_bobot = cluster_data[['working_st', 'disability_st', 'chronic_disease_type', 'single_elderly_family']].sum().sum()
         cluster_bobot[cluster_id] = total_bobot
 
     # Mengurutkan cluster berdasarkan total bobot (cluster dengan bobot tertinggi dulu)
@@ -74,7 +74,7 @@ def cluster_data():
 
 
 def select_with_decision_tree(df, kuota):
-    features = ['working_st', 'disability_st', 'chronic_disease_type', 'dependents_count']
+    features = ['working_st', 'disability_st', 'chronic_disease_type', 'single_elderly_family']
     X = df[features]
 
     clf = DecisionTreeClassifier(random_state=42)
